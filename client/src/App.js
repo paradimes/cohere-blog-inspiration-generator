@@ -4,34 +4,37 @@ import "./App.css";
 function App() {
   const [data, setData] = React.useState(null);
   const [prompt, setPrompt] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  // Update prompt variable when handleChange is called
   const handleChange = (abc) => {
     setPrompt(abc.target.value);
   };
 
-  // When handleSubmit is called, passes prompt to /api and then gets assigns response to data
   const handleSubmit = (abc) => {
+    setIsLoading(true);
     abc.preventDefault();
     setData(null);
     fetch(`/api?prompt=${prompt}`)
       .then((res) => res.json())
-      .then((data) => setData(`${data.generations[0].text.slice(0, -1)}`));
+      .then((data) => {
+        setData(`${data.generations[0].text.slice(0, -1)}`);
+        setIsLoading(false);
+      });
   };
 
   return (
-    <div className=" bg-red-600 text-center border-8 border-blue-400">
+    <div className=" bg-red-600 text-center border-8 border-blue-400 p-8">
       <header className="App-header">
         <h1 className=" mb-20 text-6xl font-extrabold text-yellow-400 ">
-          Recipe Generator
+          Food Blog Inspiration Generator
         </h1>
         <form onSubmit={handleSubmit}>
           <label>
             <h2 className="mb-5 text-4xl font-bold ">
-              What would you like to make today? <br />
+              What are you writing about today? <br />
             </h2>
             <textarea
-              className="text-black text-3xl font-bold"
+              className="text-black text-3xl font-bold text-center"
               name="input-box"
               rows="1"
               cols="70"
@@ -47,10 +50,11 @@ function App() {
           />
         </form>
         <h1 className="mt-8 mb-4 text-3xl font-bold ">Result:</h1>
-        <h3 className="text-yellow-400 font-bold border-4 border-white text-xl p-10 min-w-[1000px]">
-          {!data
-            ? 'Recipe will appear here. Try general topics like "Sports" or "Entertainment".'
-            : data}
+        <h3 className="text-yellow-400 font-bold border-4 border-white text-xxl p-10 max-w-fit ">
+          {!data &&
+            !isLoading &&
+            "The Generator's output will appear here. Try topics like 'Salmon' or 'Filet Mignon'."}
+          {isLoading ? "Loading..." : data}
         </h3>
 
         <p className="mt-20 text-lg font-semibold ">

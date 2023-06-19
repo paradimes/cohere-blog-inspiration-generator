@@ -1,14 +1,11 @@
-// server/index.js
 const path = require("path");
 const express = require("express");
 const PORT = process.env.PORT || 3001;
 const app = express();
 const cohere = require("cohere-ai");
-// const { createFeedbackBot } = require("./discord-bot");
 
 const startApp = async () => {
   console.log("Creating cohere client");
-  // cohere.init(process.env.api_key, "2021-11-08");
   cohere.init("API_KEY");
   console.log("Cohere client created");
 
@@ -16,71 +13,12 @@ const startApp = async () => {
 
   app.get("/api", async (req, res) => {
     const prompt =
-      `This is a trivia question generation tool. It generates questions related to a given topic.\n-\nTopic: History\nQ: Who invented penicillin?\n-\nTopic: Entertainment\nQ: What was the first toy to be advertised on television?\n-\nTopic: Sports\nQ: Which two countries have not missed one of the modern-day Olympics?\n-\nTopic: Geography\nQ: What is the smallest country in the world?\n-\nTopic: Food \nQ: What is the rarest M&M color?\n-\nTopic: Switzerland\nQ: What country consumes the most chocolate per capita? \n- \nTopic: India\nQ: What is the name given to Indian food cooked over charcoal in a clay oven?\n-\nTopic: Space\nQ: What was the first soft drink in space?\n-\nTopic: Cheese\nQ: From which country does Gouda cheese originate?\n-\nTopic: Disney\nQ: What was the first feature-length animated movie ever released?\n-\nTopic: Books\nQ: Who authored Sherlock Holmes? \n-\nTopic: Entertainment\nQ: What awards has an EGOT winner won?\n-\nTopic: Music\nQ: Which member of the Beatles married Yoko Ono?\n-\nTopic: Soccer\nQ: Which country won the first-ever soccer World Cup in 1930?\n-\nTopic: Basketball\nQ: Which Former NBA Player Was Nicknamed Agent Zero?\n-\nTopic: Gymnastics \nQ: Who was the first gymnast to score a perfect 10 score?\n-\nTopic: Volleyball\nQ: Dump, floater, and wipe are terms used in which team sport?\n-\nTopic: Formula 1\nQ: Who was the first female driver to score points in a Grand Prix?\n-\nTopic: United States\nQ: In which state is Area 51 located? \n-\nTopic: Animals\nQ: How long do elephant pregnancies last?\n-\nTopic: Science\nQ: In what type of matter are atoms most tightly packed?\n-\nTopic: Anatomy\nQ: How many teeth does an adult human have?\n-\nTopic: Etymology\nQ: Who invented the word vomit?\n-\nTopic: ${req.query.prompt}` ||
+      `This is a recipe description generation tool. It generates descriptions for recipes based on different types of dishes.\n-\nTopic: Pasta\nDescription: Discover the art of creating delicious pasta dishes that will satisfy your cravings. From classic Italian recipes to unique fusion creations, explore a world of flavors with our pasta recipes.\n-\nTopic: Cookies\nDescription: Indulge in the irresistible aroma and taste of freshly baked cookies. From traditional chocolate chip cookies to unique and creative varieties, our cookie recipes will delight your taste buds and bring a smile to your face.\n-\nTopic: Pizza\nDescription: Experience the magic of homemade pizza with our collection of mouthwatering recipes. From thin crust to deep dish, topped with an array of savory ingredients, our pizza recipes will transport you to Italy with every bite.\n-\nTopic: Soups\nDescription: Warm up your soul with a comforting bowl of soup. Whether you prefer creamy or broth-based, vegetarian or meaty, our soup recipes offer a delightful blend of flavors and textures that will leave you feeling nourished and satisfied.\n-\nTopic: Salads\nDescription: Elevate your salad game with our refreshing and vibrant salad recipes. From light and refreshing to hearty and filling, our salads are packed with fresh ingredients, flavorful dressings, and a variety of textures that will make every bite a delight.\n-\nTopic: Smoothies\nDescription: Start your day with a burst of energy and nutrients with our nutritious smoothie recipes. From fruity blends to green powerhouses, our smoothies are packed with vitamins, antioxidants, and delicious flavors that will keep you feeling refreshed and revitalized.\n-\nTopic: Grilled Meats\nDescription: Fire up the grill and savor the juicy and flavorful goodness of perfectly grilled meats. From succulent steaks to tender chicken and mouthwatering burgers, our grilled meat recipes will take your outdoor cooking to the next level.\n-\nTopic: Vegetarian Delights\nDescription: Embrace the world of vegetarian cuisine with our diverse and satisfying recipes. From plant-based alternatives to creative vegetarian twists on classic dishes, our recipes will inspire you to explore the endless possibilities of meatless cooking.\n-\nTopic: Seafood\nDescription: Dive into a sea of flavors with our seafood recipes. From succulent shrimp to flaky fish and delectable shellfish, our recipes will guide you in creating mouthwatering seafood dishes that will impress even the most discerning palate.\n-\nTopic: Breakfast Favorites\nDescription: Kickstart your day with a hearty and delicious breakfast. From fluffy pancakes to savory egg dishes and energizing smoothie bowls, our breakfast recipes will fuel your mornings and make every day feel like a special occasion.\n-\nTopic: ${req.query.prompt}` ||
       "";
-
-    // const prompt =
-    //   `This is a recipe generation tool. It generates recipes related to a given topic.
-    //   -
-    //   Topic: Homemade Pizza
-    //   Recipe:
-    //   Ingredients:
-    //   - 1 1/2 cups warm water (105°F-115°F)
-    //   - 1 package (2 1/4 teaspoons) active dry yeast
-    //   - 3 1/2 cups bread flour
-    //   - 2 tablespoons extra virgin olive oil
-    //   - 2 teaspoons salt
-    //   - 1 teaspoon sugar
-    //   - Pizza toppings (such as sauce, cheese, and toppings of your choice)
-
-    //   Instructions:
-    //   1. In a small bowl, combine the warm water and yeast. Stir until the yeast has dissolved. Let it sit for 5 minutes until foamy.
-    //   2. In a large bowl, combine the bread flour, olive oil, salt, and sugar. Mix well.
-    //   3. Pour the yeast mixture into the flour mixture. Stir until a dough forms.
-    //   4. Transfer the dough to a floured surface and knead for about 5 minutes, until smooth and elastic.
-    //   5. Place the dough in a greased bowl, cover with a clean kitchen towel, and let it rise in a warm place for about 1 hour, or until doubled in size.
-    //   6. Preheat the oven to 475°F (245°C). If you have a pizza stone, place it in the oven while preheating.
-    //   7. Punch down the dough and divide it into two equal portions. Roll out each portion into a 12-inch circle.
-    //   8. Transfer the dough to a baking sheet or pizza peel lined with parchment paper.
-    //   9. Add your desired pizza toppings, such as sauce, cheese, and toppings of your choice.
-    //   10. Carefully transfer the pizza to the preheated oven (or onto the preheated pizza stone).
-    //   11. Bake for about 12-15 minutes, or until the crust is golden and the cheese is bubbly and slightly browned.
-    //   12. Remove from the oven and let it cool for a few minutes before slicing and serving.
-
-    //   Enjoy your delicious homemade pizza!
-    //   -
-    //   Topic: Chocolate Chip Oatmeal Cookies
-    //   Recipe:
-    //   Ingredients:
-    //   - 1 cup butter, softened
-    //   - 1 cup packed light brown sugar
-    //   - 1/2 cup white sugar
-    //   - 2 eggs
-    //   - 2 teaspoons vanilla extract
-    //   - 1 1/4 cups all-purpose flour
-    //   - 1/2 teaspoon baking soda
-    //   - 1 teaspoon salt
-    //   - 3 cups quick-cooking oats
-    //   - 1 cup chopped walnuts
-    //   - 1 cup semisweet chocolate chips
-
-    //   Instructions:
-    //   1. Preheat the oven to 325°F (165°C).
-    //   2. In a large bowl, cream together the softened butter, brown sugar, and white sugar until smooth.
-    //   3. Beat in the eggs one at a time, then stir in the vanilla extract.
-    //   4. In a separate bowl, combine the flour, baking soda, and salt. Gradually add this dry mixture to the creamed mixture and mix well.
-    //   5. Stir in the quick-cooking oats, chopped walnuts, and semisweet chocolate chips.
-    //   6. Drop rounded tablespoons of dough onto ungreased baking sheets.
-    //   7. Bake for 12 to 15 minutes in the preheated oven, or until golden brown.
-    //   8. Allow the cookies to cool on the baking sheets for 5 minutes before transferring them to wire racks to cool completely.
-
-    //   Enjoy your delicious homemade cookies!
-    //   -
-    //   Topic: ${req.query.prompt}` || "";
 
     const response = await cohere.generate("xlarge", {
       prompt,
-      max_tokens: 50,
+      max_tokens: 500,
       temperature: 0.5,
       k: 0,
       p: 0.75,
