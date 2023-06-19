@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 
 function App() {
   const [data, setData] = React.useState(null);
@@ -23,8 +22,8 @@ function App() {
   };
 
   return (
-    <div className=" bg-red-600 text-center border-8 border-blue-400 p-8">
-      <header className="App-header">
+    <div className="">
+      <header className="bg-red-600 text-center p-8 min-h-screen flex flex-col items-center justify-center text-white ">
         <h1 className=" mb-20 text-6xl font-extrabold text-yellow-400 ">
           Food Blog Inspiration Generator
         </h1>
@@ -44,13 +43,13 @@ function App() {
           </label>
           <br />
           <input
-            className="cursor-pointer border-4 border-white bg-white px-2 text-lg text-black font-bold  "
+            className="cursor-pointer border-4 border-white bg-white px-2 text-lg mt-3 text-black font-bold  "
             type="submit"
             value="Submit"
           />
         </form>
         <h1 className="mt-8 mb-4 text-3xl font-bold ">Result:</h1>
-        <h3 className="text-yellow-400 font-bold border-4 border-white text-xxl p-10 max-w-fit ">
+        <h3 className="text-yellow-400 font-bold border-4 border-white text-3xl p-10 max-w-fit ">
           {!data &&
             !isLoading &&
             "The Generator's output will appear here. Try topics like 'Salmon' or 'Filet Mignon'."}
@@ -59,8 +58,8 @@ function App() {
 
         <p className="mt-20 text-lg font-semibold ">
           Powered by{" "}
-          <a href="https://cohere.ai/" className="App-link">
-            Cohere
+          <a href="https://cohere.ai/" className="text-green-300 ">
+            cohere
           </a>
         </p>
       </header>
