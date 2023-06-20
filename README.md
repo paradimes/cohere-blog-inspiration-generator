@@ -6,6 +6,8 @@ Writing a blog? Don't know where to start, or need some inspiration to get rolli
 
 Learn about Cohere https://docs.cohere.com/docs. 
 
+Note: Used https://github.com/elaineg/trivia-generator to get started. 
+
 ## Installation
 
 1. Clone this repository. 
