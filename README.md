@@ -30,5 +30,5 @@ Note: You will need a Cohere API Key. Sign up at https://dashboard.cohere.ai/reg
 #### Step 3. Ta-da! Output for Salmon.  ####
 ![Output-Salmon](assets/screenshots/3-Output-Salmon.png)
 
-#### Step 4. Output for Cookies. ####
+#### Output for Cookies. ####
 ![Output-Cookies](assets/screenshots/4-Output-Cookies.png)
